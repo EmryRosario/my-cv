@@ -1,14 +1,12 @@
 module.exports = {
-  entry: {
-    app: ['babel-polyfill', './src/index.js']
-  },
+  entry: ['babel-polyfill', './src/index.js'],
   output: {
     path: './public',
-    filename: '[name].js'
+    filename: 'app.js'
   },
   module: {
     loaders: [
-      { test: /\.jsx?$/, exclude: /node_modules/, loader: 'babel-loader' }
+      { test: /\.js?$/, exclude: /node_modules/, loader: 'babel-loader' }
     ]
   }
 }
