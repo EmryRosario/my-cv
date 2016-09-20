@@ -75,8 +75,8 @@ export function fetchEducations () {
 }
 
 
-export async function fetchsSkills () {
-  return dispatch => {
+export async function fetchSkills () {
+  return async dispatch => {
     try {
       dispatch(requestSkills())
       var skills = await fetch('/api/')
