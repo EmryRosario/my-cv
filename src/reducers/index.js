@@ -7,7 +7,7 @@
 */
 
 import { combineReducers } from 'redux'
-import { ADD_EDUCATION, ADD_SKILL, ADD_EXPERIENCE } from '../actions'
+import { ADD_EDUCATION, ADD_SKILL, ADD_EXPERIENCE, REQUEST_EDUCATIONS_SUCCESS, REQUEST_SKILLS_SUCCESS} from '../actions'
 
 function education (state={}, action) {
   switch (action.type) {
@@ -26,6 +26,10 @@ function educations (state=[], action) {
   case ADD_EDUCATION:
     return [
       ...state, education(undefined, action)
+    ]
+  case REQUEST_EDUCATIONS_SUCCESS:
+    return [
+      ...state, ...action.payload.educations
     ]
   default:
     return state
@@ -49,6 +53,10 @@ function skills (state=[], action) {
   case ADD_SKILL:
     return [
       ...state, skill(undefined, action)
+    ]
+  case REQUEST_SKILLS_SUCCESS:
+    return [
+      ...state, ...action.payload.skills
     ]
   default:
     return state

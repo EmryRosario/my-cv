@@ -30066,43 +30066,25 @@
 
 	var _react2 = _interopRequireDefault(_react);
 
-	var _redux = __webpack_require__(471);
-
 	var _reactRedux = __webpack_require__(486);
 
-	var _reduxThunk = __webpack_require__(495);
-
-	var _reduxThunk2 = _interopRequireDefault(_reduxThunk);
-
-	var _reducers = __webpack_require__(496);
-
-	var _reducers2 = _interopRequireDefault(_reducers);
-
-	var _App = __webpack_require__(500);
+	var _App = __webpack_require__(507);
 
 	var _App2 = _interopRequireDefault(_App);
 
-	var _actions = __webpack_require__(497);
+	var _store = __webpack_require__(511);
 
-	var _reduxLogger = __webpack_require__(503);
-
-	var _reduxLogger2 = _interopRequireDefault(_reduxLogger);
+	var _store2 = _interopRequireDefault(_store);
 
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
-
-	var logger = (0, _reduxLogger2.default)();
-	var store = (0, _redux.createStore)(_reducers2.default, (0, _redux.applyMiddleware)(logger, _reduxThunk2.default));
 
 	var Root = function Root() {
 	  return _react2.default.createElement(
 	    _reactRedux.Provider,
-	    { store: store },
+	    { store: _store2.default },
 	    _react2.default.createElement(_App2.default, null)
 	  );
 	};
-
-	store.dispatch((0, _actions.fetchEducations)());
-	store.dispatch((0, _actions.fetchSkills)());
 
 	exports.default = Root;
 
@@ -31802,7 +31784,14 @@
 	exports['default'] = thunk;
 
 /***/ },
-/* 496 */
+/* 496 */,
+/* 497 */,
+/* 498 */,
+/* 499 */,
+/* 500 */,
+/* 501 */,
+/* 502 */,
+/* 503 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -31813,7 +31802,7 @@
 
 	var _redux = __webpack_require__(471);
 
-	var _actions = __webpack_require__(497);
+	var _actions = __webpack_require__(504);
 
 	function _toConsumableArray(arr) { if (Array.isArray(arr)) { for (var i = 0, arr2 = Array(arr.length); i < arr.length; i++) { arr2[i] = arr[i]; } return arr2; } else { return Array.from(arr); } } /*
 	                                                                                                                                                                                                    {
@@ -31845,6 +31834,8 @@
 	  switch (action.type) {
 	    case _actions.ADD_EDUCATION:
 	      return [].concat(_toConsumableArray(state), [education(undefined, action)]);
+	    case _actions.REQUEST_EDUCATIONS_SUCCESS:
+	      return [].concat(_toConsumableArray(state), _toConsumableArray(action.payload.educations));
 	    default:
 	      return state;
 	  }
@@ -31872,6 +31863,8 @@
 	  switch (action.type) {
 	    case _actions.ADD_SKILL:
 	      return [].concat(_toConsumableArray(state), [skill(undefined, action)]);
+	    case _actions.REQUEST_SKILLS_SUCCESS:
+	      return [].concat(_toConsumableArray(state), _toConsumableArray(action.payload.skills));
 	    default:
 	      return state;
 	  }
@@ -31911,7 +31904,7 @@
 	});
 
 /***/ },
-/* 497 */
+/* 504 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -31919,65 +31912,67 @@
 	Object.defineProperty(exports, "__esModule", {
 	  value: true
 	});
-	exports.fetchSkills = exports.REQUEST_SKILLS_FAILURE = exports.REQUEST_SKILLS_SUCCESS = exports.REQUEST_SKILLS = exports.REQUEST_EDUCATIONS_FAILURE = exports.REQUEST_EDUCATIONS_SUCCESS = exports.REQUEST_EDUCATIONS = exports.ADD_SKILL = exports.ADD_EDUCATION = undefined;
+	exports.fetchExperiences = exports.REQUEST_EXPERIENCES_FAILURE = exports.REQUEST_EXPERIENCES_SUCCESS = exports.REQUEST_EXPERIENCES = exports.REQUEST_SKILLS_FAILURE = exports.REQUEST_SKILLS_SUCCESS = exports.REQUEST_SKILLS = exports.REQUEST_EDUCATIONS_FAILURE = exports.REQUEST_EDUCATIONS_SUCCESS = exports.REQUEST_EDUCATIONS = exports.ADD_SKILL = exports.ADD_EDUCATION = undefined;
 
-	var fetchSkills = exports.fetchSkills = function () {
-	  var _ref = _asyncToGenerator(regeneratorRuntime.mark(function _callee2() {
-	    var _this = this;
+	var fetchExperiences = exports.fetchExperiences = function () {
+	  var _ref3 = _asyncToGenerator(regeneratorRuntime.mark(function _callee4() {
+	    var _this2 = this;
 
-	    return regeneratorRuntime.wrap(function _callee2$(_context2) {
+	    return regeneratorRuntime.wrap(function _callee4$(_context4) {
 	      while (1) {
-	        switch (_context2.prev = _context2.next) {
+	        switch (_context4.prev = _context4.next) {
 	          case 0:
-	            return _context2.abrupt('return', function () {
-	              var _ref2 = _asyncToGenerator(regeneratorRuntime.mark(function _callee(dispatch) {
-	                var skills;
-	                return regeneratorRuntime.wrap(function _callee$(_context) {
+	            return _context4.abrupt('return', function () {
+	              var _ref4 = _asyncToGenerator(regeneratorRuntime.mark(function _callee3(dispatch) {
+	                var experiences;
+	                return regeneratorRuntime.wrap(function _callee3$(_context3) {
 	                  while (1) {
-	                    switch (_context.prev = _context.next) {
+	                    switch (_context3.prev = _context3.next) {
 	                      case 0:
-	                        _context.prev = 0;
+	                        _context3.prev = 0;
 
-	                        dispatch(requestSkills());
-	                        _context.next = 4;
-	                        return (0, _isomorphicFetch2.default)('/api/');
+	                        dispatch(requestExperiences());
+	                        _context3.next = 4;
+	                        return (0, _isomorphicFetch2.default)('/api/').then(function (response) {
+	                          return response.json();
+	                        });
 
 	                      case 4:
-	                        skills = _context.sent;
+	                        experiences = _context3.sent;
 
-	                        dispatch(requestSkillsSuccess(skills));
-	                        _context.next = 11;
+	                        dispatch(requestExperiencesSuccess(experiences));
+	                        _context3.next = 11;
 	                        break;
 
 	                      case 8:
-	                        _context.prev = 8;
-	                        _context.t0 = _context['catch'](0);
+	                        _context3.prev = 8;
+	                        _context3.t0 = _context3['catch'](0);
 
-	                        dispatch(requestSkillsFailure(_context.t0));
+	                        dispatch(requestExperiencesFailure(_context3.t0));
 
 	                      case 11:
 	                      case 'end':
-	                        return _context.stop();
+	                        return _context3.stop();
 	                    }
 	                  }
-	                }, _callee, _this, [[0, 8]]);
+	                }, _callee3, _this2, [[0, 8]]);
 	              }));
 
-	              return function (_x) {
-	                return _ref2.apply(this, arguments);
+	              return function (_x3) {
+	                return _ref4.apply(this, arguments);
 	              };
 	            }());
 
 	          case 1:
 	          case 'end':
-	            return _context2.stop();
+	            return _context4.stop();
 	        }
 	      }
-	    }, _callee2, this);
+	    }, _callee4, this);
 	  }));
 
-	  return function fetchSkills() {
-	    return _ref.apply(this, arguments);
+	  return function fetchExperiences() {
+	    return _ref3.apply(this, arguments);
 	  };
 	}();
 
@@ -31989,9 +31984,13 @@
 	exports.requestSkills = requestSkills;
 	exports.requestSkillsSuccess = requestSkillsSuccess;
 	exports.requestSkillsFailure = requestSkillsFailure;
+	exports.requestExperiences = requestExperiences;
+	exports.requestExperiencesSuccess = requestExperiencesSuccess;
+	exports.requestExperiencesFailure = requestExperiencesFailure;
 	exports.fetchEducations = fetchEducations;
+	exports.fetchSkills = fetchSkills;
 
-	var _isomorphicFetch = __webpack_require__(498);
+	var _isomorphicFetch = __webpack_require__(505);
 
 	var _isomorphicFetch2 = _interopRequireDefault(_isomorphicFetch);
 
@@ -32007,6 +32006,9 @@
 	var REQUEST_SKILLS = exports.REQUEST_SKILLS = 'REQUEST_SKILLS';
 	var REQUEST_SKILLS_SUCCESS = exports.REQUEST_SKILLS_SUCCESS = 'REQUEST_SKILLS_SUCCESS';
 	var REQUEST_SKILLS_FAILURE = exports.REQUEST_SKILLS_FAILURE = 'REQUEST_SKILLS_FAILURE';
+	var REQUEST_EXPERIENCES = exports.REQUEST_EXPERIENCES = 'REQUEST_EXPERIENCES';
+	var REQUEST_EXPERIENCES_SUCCESS = exports.REQUEST_EXPERIENCES_SUCCESS = 'REQUEST_EXPERIENCES_SUCCESS';
+	var REQUEST_EXPERIENCES_FAILURE = exports.REQUEST_EXPERIENCES_FAILURE = 'REQUEST_EXPERIENCES_FAILURE';
 
 	function addEducation(title, place) {
 	  return {
@@ -32048,10 +32050,10 @@
 	  };
 	}
 
-	function requestSkillsSuccess(educations) {
+	function requestSkillsSuccess(skills) {
 	  return {
 	    type: REQUEST_SKILLS_SUCCESS,
-	    payload: { educations: educations }
+	    payload: { skills: skills }
 	  };
 	}
 
@@ -32062,21 +32064,122 @@
 	  };
 	}
 
-	function fetchEducations() {
-	  return function (dispatch) {
-	    dispatch(requestEducations);
-	    return (0, _isomorphicFetch2.default)('/api/educations').then(function (response) {
-	      return response.json();
-	    }).then(function (educations) {
-	      return dispatch(requestSkillsSuccess(educations));
-	    }).catch(function (e) {
-	      return dispatch(requestEducationsFailure(e));
-	    });
+	function requestExperiences() {
+	  return {
+	    type: REQUEST_EXPERIENCES
 	  };
 	}
 
+	function requestExperiencesSuccess(experiences) {
+	  return {
+	    type: REQUEST_EXPERIENCES_SUCCESS,
+	    payload: { experiences: experiences }
+	  };
+	}
+
+	function requestExperiencesFailure(err) {
+	  return {
+	    type: REQUEST_EXPERIENCES_FAILURE,
+	    payload: { err: err }
+	  };
+	}
+
+	function api(search) {
+	  if (search === 'educations') {
+	    var educations = [{ title: 'Ingenieria', place: 'Unapec' }, { title: 'Frontend', place: 'Platzi' }, { title: 'High School', place: 'Espiritu Santo' }];
+	    return Promise.resolve(educations);
+	  } else if (search === 'skills') {
+	    var skills = [{ title: 'HTML5', level: 100 }, { title: 'CSS', level: 100 }, { title: 'JavaScript', level: 100 }];
+	    return Promise.resolve(skills);
+	  }
+	}
+
+	function fetchEducations() {
+	  return function () {
+	    var _ref = _asyncToGenerator(regeneratorRuntime.mark(function _callee(dispatch) {
+	      var educations;
+	      return regeneratorRuntime.wrap(function _callee$(_context) {
+	        while (1) {
+	          switch (_context.prev = _context.next) {
+	            case 0:
+	              _context.prev = 0;
+
+	              dispatch(requestEducations());
+	              _context.next = 4;
+	              return api('educations');
+
+	            case 4:
+	              educations = _context.sent;
+
+	              dispatch(requestEducationsSuccess(educations));
+	              _context.next = 11;
+	              break;
+
+	            case 8:
+	              _context.prev = 8;
+	              _context.t0 = _context['catch'](0);
+
+	              dispatch(requestEducationsFailure());
+
+	            case 11:
+	            case 'end':
+	              return _context.stop();
+	          }
+	        }
+	      }, _callee, this, [[0, 8]]);
+	    }));
+
+	    return function (_x) {
+	      return _ref.apply(this, arguments);
+	    };
+	  }();
+	}
+
+	function fetchSkills() {
+	  var _this = this;
+
+	  return function () {
+	    var _ref2 = _asyncToGenerator(regeneratorRuntime.mark(function _callee2(dispatch) {
+	      var skills;
+	      return regeneratorRuntime.wrap(function _callee2$(_context2) {
+	        while (1) {
+	          switch (_context2.prev = _context2.next) {
+	            case 0:
+	              _context2.prev = 0;
+
+	              dispatch(requestSkills());
+	              _context2.next = 4;
+	              return api('skills');
+
+	            case 4:
+	              skills = _context2.sent;
+
+	              dispatch(requestSkillsSuccess(skills));
+	              _context2.next = 11;
+	              break;
+
+	            case 8:
+	              _context2.prev = 8;
+	              _context2.t0 = _context2['catch'](0);
+
+	              dispatch(requestSkillsFailure(_context2.t0));
+
+	            case 11:
+	            case 'end':
+	              return _context2.stop();
+	          }
+	        }
+	      }, _callee2, _this, [[0, 8]]);
+	    }));
+
+	    return function (_x2) {
+	      return _ref2.apply(this, arguments);
+	    };
+	  }();
+	}
+
 /***/ },
-/* 498 */
+/* 505 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -32085,11 +32188,11 @@
 	// on the global object (window or self)
 	//
 	// Return that as the export for use in Webpack, Browserify etc.
-	__webpack_require__(499);
+	__webpack_require__(506);
 	module.exports = self.fetch.bind(self);
 
 /***/ },
-/* 499 */
+/* 506 */
 /***/ function(module, exports) {
 
 	'use strict';
@@ -32534,7 +32637,7 @@
 	})(typeof self !== 'undefined' ? self : undefined);
 
 /***/ },
-/* 500 */
+/* 507 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -32547,7 +32650,7 @@
 
 	var _react2 = _interopRequireDefault(_react);
 
-	var _HeaderBox = __webpack_require__(501);
+	var _HeaderBox = __webpack_require__(508);
 
 	var _HeaderBox2 = _interopRequireDefault(_HeaderBox);
 
@@ -32564,7 +32667,7 @@
 	exports.default = App;
 
 /***/ },
-/* 501 */
+/* 508 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -32575,7 +32678,7 @@
 
 	var _reactRedux = __webpack_require__(486);
 
-	var _Header = __webpack_require__(502);
+	var _Header = __webpack_require__(509);
 
 	var _Header2 = _interopRequireDefault(_Header);
 
@@ -32592,10 +32695,10 @@
 	exports.default = HeaderBox;
 
 /***/ },
-/* 502 */
+/* 509 */
 /***/ function(module, exports, __webpack_require__) {
 
-	"use strict";
+	'use strict';
 
 	Object.defineProperty(exports, "__esModule", {
 	  value: true
@@ -32611,14 +32714,12 @@
 	  var userName = _ref.userName;
 	  var userAvatar = _ref.userAvatar;
 	  return _react2.default.createElement(
-	    "header",
-	    { className: "Header" },
-	    "if (userAvatar) ",
-	    _react2.default.createElement("img", { src: "./img/" + userAvatar + ".jpg", alt: "Avatar", "class": "Header-avatar" }),
-	    _react2.default.createElement("img", { src: "./img/avatar.jpg", alt: "Avatar", "class": "Header-avatar" }),
+	    'header',
+	    { className: 'Header' },
+	    _react2.default.createElement('img', { src: userAvatar ? './img/' + userAvatar + '.jpg' : './img/avatar.jpg', alt: 'Avatar', className: 'Header-avatar', height: '100' }),
 	    _react2.default.createElement(
-	      "span",
-	      { "class": "Header-name" },
+	      'span',
+	      { className: 'Header-name' },
 	      userName
 	    )
 	  );
@@ -32627,7 +32728,7 @@
 	exports.default = Header;
 
 /***/ },
-/* 503 */
+/* 510 */
 /***/ function(module, exports) {
 
 	"use strict";
@@ -32870,6 +32971,42 @@
 	}
 
 	module.exports = createLogger;
+
+/***/ },
+/* 511 */
+/***/ function(module, exports, __webpack_require__) {
+
+	'use strict';
+
+	Object.defineProperty(exports, "__esModule", {
+	  value: true
+	});
+
+	var _redux = __webpack_require__(471);
+
+	var _reduxThunk = __webpack_require__(495);
+
+	var _reduxThunk2 = _interopRequireDefault(_reduxThunk);
+
+	var _reducers = __webpack_require__(503);
+
+	var _reducers2 = _interopRequireDefault(_reducers);
+
+	var _actions = __webpack_require__(504);
+
+	var _reduxLogger = __webpack_require__(510);
+
+	var _reduxLogger2 = _interopRequireDefault(_reduxLogger);
+
+	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+	var logger = (0, _reduxLogger2.default)();
+	var store = (0, _redux.createStore)(_reducers2.default, (0, _redux.applyMiddleware)(logger, _reduxThunk2.default));
+
+	store.dispatch((0, _actions.fetchEducations)());
+	store.dispatch((0, _actions.fetchSkills)());
+
+	exports.default = store;
 
 /***/ }
 /******/ ]);
